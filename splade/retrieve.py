@@ -12,7 +12,7 @@ from .utils.utils import get_dataset_name, get_initialize_config
 
 
 @hydra.main(config_path=CONFIG_PATH, config_name=CONFIG_NAME, version_base="1.2")
-def retrieve_evaluate(exp_dict: DictConfig):
+def retrieve(exp_dict: DictConfig):
     exp_dict, config, init_dict, model_training_config = get_initialize_config(exp_dict)
 
     #if HF: need to udate config.
@@ -33,8 +33,8 @@ def retrieve_evaluate(exp_dict: DictConfig):
         evaluator = SparseRetrieval(config=config, model=model, dataset_name=get_dataset_name(data_dir),
                                     compute_stats=True, dim_voc=model.output_dim)
         evaluator.retrieve(q_loader, top_k=exp_dict["config"]["top_k"], threshold=exp_dict["config"]["threshold"])
-    evaluate(exp_dict)
+    # evaluate(exp_dict)
 
 
 if __name__ == "__main__":
-    retrieve_evaluate()
+    retrieve()
